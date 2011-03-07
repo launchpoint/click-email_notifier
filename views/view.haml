@@ -1,0 +1,58 @@
+.panel
+  .title
+    =se("Email Settings")
+  .body
+    .item
+      .title
+        =se("Accounts")
+      .body
+        -if (count($accounts)>0)
+          %table
+            -foreach($accounts as $account)
+              %tr
+                %td
+                  %a{:href=>edit_email_account_url($account)} +$account->name
+                %td
+                  +$account->from_name
+                %td
+                  +$account->from_address
+    .item
+      .title
+        =se("Templates")
+      .body
+        %table
+          -foreach($templates as $template)
+            %tr
+              %td
+                %a{:href=>edit_email_master_template_url($template)}
+                  +$template->name
+              %td
+                +truncate($template->body_text)
+    .item
+      .title
+        =se("Send Test")
+      .body
+        %form{:method=>'post'}
+          %fieldset
+            %label Account
+            %br
+            =select_tag('account_id', $accounts)
+            %br
+            %label To
+            %br
+            %input{:type=>'text', :value=>p('to'), :name=>'to'}
+            %br
+            %label Subject
+            %br
+            %input{:type=>'text', :value=>p('subject'), :name=>'subject'}
+            %br
+            %label Body
+            %br
+            %textarea{:name=>'body'} +p('body')
+            %br
+            -if($run_mode == RUN_MODE_DEVELOPMENT)
+              =checkbox_tag('bypass', 1, p('bypass'))
+              Bypass dev mode (really send)
+              %br
+            =submit_tag('Send')
+            

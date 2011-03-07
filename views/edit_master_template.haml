@@ -1,0 +1,24 @@
+.panel
+  .title
+    =se("Edit Template")
+  .instructions
+    =se("Every template needs a [content] area that will be substituted with notification content. In addition, notifications define different template variables. #to# and #unsubscribe_url# are common throughout all notifications. If you use this master email template with only specific notifications, you might also reference other variables specific to a notification template.")
+  .body
+    =form_for($template)
+    %table
+      %tr
+        %th =se("Account")
+        %td =select_field('email_account_id', EmailAccount::find_all())
+      %tr
+        %th =se("Name")
+        %td =text_field('name')
+      %tr
+        %th =se("Text body")
+        %td =textarea_field('body_text')
+      %tr
+        %th =se("HTML Body")
+        %td =textarea_field('body_html', 'class', 'wysiwyg')
+      %tr
+        %th
+        %td =submit_tag('Save')
+    =end_form_for()

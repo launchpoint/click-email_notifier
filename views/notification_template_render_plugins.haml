@@ -1,0 +1,21 @@
+.instructions
+  =se("This is the template that will be used to send out email notifications for this event.")
+.body
+  =form_for($email_template)
+  %table
+    %tr
+      %th =se("Master Template")
+      %td =select_field('email_master_template_id', $master_templates)
+    %tr
+      %th =se("Subject")
+      %td =text_field('subject')
+    %tr
+      %th =se("Text body")
+      %td =textarea_field('body_text')
+    %tr
+      %th =se("HTML Body")
+      %td =textarea_field('body_html', 'class', 'wysiwyg')
+    %tr
+      %th
+      %td =submit_tag('Save')
+  =end_form_for()
